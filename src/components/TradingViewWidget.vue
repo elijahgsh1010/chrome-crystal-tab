@@ -51,15 +51,64 @@ onMounted(() => {
   left: 20px;     /* Bottom LEFT */
   bottom: 20px;   /* Adjust as needed */
   z-index: 9999;  /* Above app content */
+  
+  /* Glassmorphism effect */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  
+  /* Shadow for depth */
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.tv-floating-widget:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 12px 40px 0 rgba(31, 38, 135, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transform: translateY(-4px);
 }
 
 .tradingview-widget-container {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tradingview-widget-container__widget {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dark theme variant (optional) */
+@media (prefers-color-scheme: dark) {
+  .tv-floating-widget {
+    background: rgba(20, 20, 30, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.3),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+  
+  .tv-floating-widget:hover {
+    background: rgba(20, 20, 30, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 12px 40px 0 rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  }
 }
 </style>
