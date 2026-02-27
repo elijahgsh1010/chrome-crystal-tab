@@ -19,6 +19,9 @@
       <div v-else class="default-background"></div>
     </div>
 
+    <!-- Date & Time Widgets -->
+    <DateTimeWidget />
+
     <!-- TradingView Widget -->
     <TradingViewWidget />
 
@@ -108,6 +111,7 @@
 import { ref, reactive, onMounted, computed, watch } from 'vue'
 import { loadSettings, saveToStorage, loadFromStorage } from './utils/storage'
 import TradingViewWidget from './components/TradingViewWidget.vue'
+import DateTimeWidget from './components/DateTimeWidget.vue'
 
 const fileInput = ref(null)
 const isSettingsOpen = ref(false)
