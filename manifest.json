@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome Crystal Tab",
+  "version": "1.0.0",
+  "description": "Customize your Chrome new tab with custom videos and images",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [],
+  "chrome_url_overrides": {
+    "newtab": "src/pages/newtab.html"
+  },
+  "action": {
+    "default_title": "Open Settings"
+  },
+  "icons": {
+    "16": "src/assets/icon-16.png",
+    "48": "src/assets/icon-48.png",
+    "128": "src/assets/icon-128.png"
+  }
+}

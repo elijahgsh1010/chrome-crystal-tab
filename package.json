@@ -1,0 +1,19 @@
+{
+  "name": "chrome-crystal-tab",
+  "version": "1.0.0",
+  "description": "Customize your Chrome new tab with custom videos and images",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "zip": "npm run build && cd dist && zip -r ../chrome-crystal-tab.zip . && cd .. && echo 'Created chrome-crystal-tab.zip'"
+  },
+  "dependencies": {
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.1.0"
+  }
+}
