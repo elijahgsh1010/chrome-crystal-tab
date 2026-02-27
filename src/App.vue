@@ -58,6 +58,21 @@
             </div>
           </div>
 
+          <!-- URL Input -->
+          <div class="setting-group">
+            <label>Or paste a URL</label>
+            <div class="url-input-group">
+              <input 
+                v-model="urlInput" 
+                type="url" 
+                placeholder="https://example.com/video.mp4"
+                class="url-input"
+              />
+              <button @click="loadFromUrl" class="btn-url">Load</button>
+            </div>
+            <small>Supports video (MP4, WebM) and image URLs</small>
+          </div>
+
           <!-- Current Media Info -->
           <div v-if="media.url" class="setting-group">
             <label>Current Media</label>
@@ -116,6 +131,7 @@ import DateTimeWidget from './components/DateTimeWidget.vue'
 const fileInput = ref(null)
 const isSettingsOpen = ref(false)
 const isDragging = ref(false)
+const urlInput = ref('')
 
 const media = reactive({
   type: null,
@@ -206,6 +222,41 @@ const formatFileSize = (bytes) => {
     unitIndex++
   }
   return `${size.toFixed(2)} ${units[unitIndex]}`
+}
+
+const loadFromUrl = async () => {
+  const url = urlInput.value.trim()
+  if (!url) {
+    alert('Please enter a valid URL')
+    return
+  }
+
+  try {
+    // Validate URL
+    new URL(url)
+
+    // Determine media type from URL
+    const lowerUrl = url.toLowerCase()
+    let mediaType = null
+
+    if (lowerUrl.includes('.mp4') || lowerUrl.includes('.webm') || url.includes('video')) {
+      mediaType = 'video'
+    } else if (lowerUrl.includes('.jpg') || lowerUrl.includes('.jpeg') || lowerUrl.includes('.png') || lowerUrl.includes('.gif') || url.includes('image')) {
+      mediaType = 'image'
+    } else {
+      alert('Could not determine media type. Please ensure URL ends with .mp4, .webm, .jpg, .png, or .gif')
+      return
+    }
+
+    // Set media
+    media.type = mediaType
+    media.url = url
+    media.size = 0 // URL-based media doesn't have size
+
+    urlInput.value = ''
+  } catch (error) {
+    alert('Invalid URL. Please enter a valid HTTP/HTTPS URL.')
+  }
 }
 </script>
 
@@ -422,6 +473,51 @@ const formatFileSize = (bytes) => {
   background: #667eea;
   cursor: pointer;
   border: none;
+}
+
+.url-input-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.url-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: monospace;
+  transition: all 0.3s ease;
+}
+
+.url-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-url {
+  padding: 10px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.btn-url:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-url:active {
+  transform: translateY(0);
 }
 
 .btn-primary {
