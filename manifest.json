@@ -7,6 +7,9 @@
     "storage"
   ],
   "host_permissions": [],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' https://s3.tradingview.com; style-src 'self' https://s3.tradingview.com; connect-src https:"
+  },
   "chrome_url_overrides": {
     "newtab": "src/pages/newtab.html"
   },
