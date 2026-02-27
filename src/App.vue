@@ -19,6 +19,9 @@
       <div v-else class="default-background"></div>
     </div>
 
+    <!-- TradingView Widget -->
+    <TradingViewWidget />
+
     <!-- Settings Button -->
     <button @click="isSettingsOpen = !isSettingsOpen" class="settings-btn" title="Settings">
       ⚙️
@@ -104,6 +107,7 @@
 <script setup>
 import { ref, reactive, onMounted, computed, watch } from 'vue'
 import { loadSettings, saveToStorage, loadFromStorage } from './utils/storage'
+import TradingViewWidget from './components/TradingViewWidget.vue'
 
 const fileInput = ref(null)
 const isSettingsOpen = ref(false)
