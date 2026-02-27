@@ -24,7 +24,7 @@ onMounted(() => {
   script.id = 'tv-single-quote-script'
   script.type = 'text/javascript'
   script.async = true
-  script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js'
+  script.src = '/embed-widget-single-quote.js'
 
   // Set the widget configuration
   script.innerHTML = JSON.stringify({
