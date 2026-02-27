@@ -32,7 +32,7 @@ onMounted(() => {
     width: 300,
     height: 150,
     colorTheme: 'light',
-    isTransparent: false,
+    isTransparent: true,
     locale: 'en'
   })
 
@@ -42,26 +42,20 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style>
 .tv-floating-widget {
   position: fixed;
   display: block;
   width: 300px;
   height: 150px;
   left: 20px;     /* Bottom LEFT */
-  bottom: 20px;   /* Adjust as needed */
+  bottom: 30px;   /* Adjust as needed */
   z-index: 9999;  /* Above app content */
-  
-  /* Glassmorphism effect */
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  
-  /* Shadow for depth */
-  box-shadow: 
-    0 8px 32px 0 rgba(31, 38, 135, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
   
   /* Smooth transitions */
   transition: all 0.3s ease;
