@@ -1,5 +1,5 @@
 <template>
-  <div class="datetime-widgets">
+  <div class="datetime-widgets" :style="containerStyle" ref="containerRef" @mousedown="startDrag">
     <!-- Date Widget -->
     <div class="glass-widget date-widget">
       <div class="widget-content">
@@ -19,11 +19,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 const formattedDate = ref('')
 const formattedTime = ref('')
 let intervalId = null
+
+// Draggable state
+const positionX = ref(20)
+const positionY = ref(20)
+const isDragging = ref(false)
+const dragOffsetX = ref(0)
+const dragOffsetY = ref(0)
+const containerRef = ref(null)
 
 const updateDateTime = () => {
   const now = new Date()
@@ -47,27 +55,80 @@ const updateDateTime = () => {
   formattedTime.value = timeFormatter.format(now)
 }
 
+const containerStyle = computed(() => ({
+  left: `${positionX.value}px`,
+  top: `${positionY.value}px`
+}))
+
+const startDrag = (event) => {
+  isDragging.value = true
+  dragOffsetX.value = event.clientX - positionX.value
+  dragOffsetY.value = event.clientY - positionY.value
+}
+
+const onMouseMove = (event) => {
+  if (!isDragging.value) return
+  
+  positionX.value = event.clientX - dragOffsetX.value
+  positionY.value = event.clientY - dragOffsetY.value
+  
+  // Keep within bounds
+  positionX.value = Math.max(0, Math.min(window.innerWidth - 280, positionX.value))
+  positionY.value = Math.max(0, Math.min(window.innerHeight - 350, positionY.value))
+}
+
+const stopDrag = () => {
+  isDragging.value = false
+  // Save position to localStorage
+  localStorage.setItem('dateTimeWidgetPosition', JSON.stringify({
+    x: positionX.value,
+    y: positionY.value
+  }))
+}
+
 onMounted(() => {
   updateDateTime()
   intervalId = setInterval(updateDateTime, 1000)
+  
+  // Load saved position
+  const saved = localStorage.getItem('dateTimeWidgetPosition')
+  if (saved) {
+    try {
+      const { x, y } = JSON.parse(saved)
+      positionX.value = x
+      positionY.value = y
+    } catch (e) {
+      console.error('Failed to load widget position')
+    }
+  }
+  
+  // Add global mouse listeners
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', stopDrag)
 })
 
 onUnmounted(() => {
   if (intervalId) {
     clearInterval(intervalId)
   }
+  document.removeEventListener('mousemove', onMouseMove)
+  document.removeEventListener('mouseup', stopDrag)
 })
 </script>
 
 <style scoped>
 .datetime-widgets {
   position: fixed;
-  top: 20px;
-  left: 20px;
   z-index: 9998;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  cursor: grab;
+  user-select: none;
+}
+
+.datetime-widgets:active {
+  cursor: grabbing;
 }
 
 .glass-widget {
