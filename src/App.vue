@@ -114,49 +114,48 @@
             <input v-model.number="settings.blur" type="range" min="0" max="20" class="slider" />
           </div>
 
-          <!-- Date & Time Widget Position -->
+          <!-- Widget Positions -->
           <div class="setting-group">
-            <label>Date & Time Widget Position (px)</label>
-            <div class="position-inputs">
-              <div class="position-input-pair">
-                <label>Top:</label>
-                <input v-model.number="settings.dateTimePosition.top" type="number" placeholder="20" class="px-input" />
-              </div>
-              <div class="position-input-pair">
-                <label>Bottom:</label>
-                <input v-model="settings.dateTimePosition.bottom" type="text" placeholder="auto" class="px-input" />
-              </div>
-              <div class="position-input-pair">
-                <label>Left:</label>
-                <input v-model.number="settings.dateTimePosition.left" type="number" placeholder="20" class="px-input" />
-              </div>
-              <div class="position-input-pair">
-                <label>Right:</label>
-                <input v-model="settings.dateTimePosition.right" type="text" placeholder="auto" class="px-input" />
-              </div>
+            <label>Date & Time Widget Position</label>
+            <div class="option-group">
+              <label class="radio-label">
+                <input v-model="settings.dateTimePosition" type="radio" value="top-left" />
+                Top Left
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.dateTimePosition" type="radio" value="top-right" />
+                Top Right
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.dateTimePosition" type="radio" value="bottom-left" />
+                Bottom Left
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.dateTimePosition" type="radio" value="bottom-right" />
+                Bottom Right
+              </label>
             </div>
           </div>
 
-          <!-- TradingView Widget Position -->
           <div class="setting-group">
-            <label>TradingView Widget Position (px)</label>
-            <div class="position-inputs">
-              <div class="position-input-pair">
-                <label>Top:</label>
-                <input v-model="settings.tradingViewPosition.top" type="text" placeholder="auto" class="px-input" />
-              </div>
-              <div class="position-input-pair">
-                <label>Bottom:</label>
-                <input v-model.number="settings.tradingViewPosition.bottom" type="number" placeholder="20" class="px-input" />
-              </div>
-              <div class="position-input-pair">
-                <label>Left:</label>
-                <input v-model.number="settings.tradingViewPosition.left" type="number" placeholder="20" class="px-input" />
-              </div>
-              <div class="position-input-pair">
-                <label>Right:</label>
-                <input v-model="settings.tradingViewPosition.right" type="text" placeholder="auto" class="px-input" />
-              </div>
+            <label>TradingView Widget Position</label>
+            <div class="option-group">
+              <label class="radio-label">
+                <input v-model="settings.tradingViewPosition" type="radio" value="top-left" />
+                Top Left
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.tradingViewPosition" type="radio" value="top-right" />
+                Top Right
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.tradingViewPosition" type="radio" value="bottom-left" />
+                Bottom Left
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.tradingViewPosition" type="radio" value="bottom-right" />
+                Bottom Right
+              </label>
             </div>
           </div>
 
@@ -189,8 +188,8 @@ const settings = reactive({
   objectFit: 'cover',
   brightness: 100,
   blur: 0,
-  dateTimePosition: { top: 20, bottom: 'auto', left: 20, right: 'auto' },
-  tradingViewPosition: { top: 'auto', bottom: 20, left: 20, right: 'auto' }
+  dateTimePosition: 'top-left',
+  tradingViewPosition: 'bottom-left'
 })
 
 const backgroundStyle = computed(() => ({
@@ -600,42 +599,6 @@ const loadFromUrl = async () => {
 
 .btn-danger:hover {
   background: #ee5a52;
-}
-
-.position-inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  background: #f5f5f5;
-  padding: 12px;
-  border-radius: 6px;
-}
-
-.position-input-pair {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.position-input-pair label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #666;
-}
-
-.px-input {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: monospace;
-  transition: all 0.3s ease;
-}
-
-.px-input:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .slide-enter-active,
