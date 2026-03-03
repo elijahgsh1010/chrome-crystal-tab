@@ -1,5 +1,5 @@
 <template>
-  <div class="tv-floating-widget">
+  <div class="tv-floating-widget" :style="positionStyle">
     <div class="tradingview-widget-container">
       <div
         class="tradingview-widget-container__widget"
@@ -10,12 +10,29 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
+
+const props = defineProps({
+  position: {
+    type: String,
+    default: 'bottom-left'
+  }
+})
 
 const widgetContainer = ref(null)
 
+const positionStyle = computed(() => {
+  const positions = {
+    'top-left': { top: '20px', left: '20px', right: 'auto', bottom: 'auto' },
+    'top-right': { top: '20px', right: '20px', left: 'auto', bottom: 'auto' },
+    'bottom-left': { bottom: '20px', left: '20px', top: 'auto', right: 'auto' },
+    'bottom-right': { bottom: '20px', right: '20px', top: 'auto', left: 'auto' }
+  }
+  return positions[props.position] || positions['bottom-left']
+})
+
 onMounted(() => {
-  console.log('[HiveBee] TradingView widget mounted')
+  console.log('[CrystalTab] TradingView widget mounted')
   
   // Only inject once
   if (document.getElementById('tv-single-quote-script')) return
@@ -24,7 +41,7 @@ onMounted(() => {
   script.id = 'tv-single-quote-script'
   script.type = 'text/javascript'
   script.async = true
-  script.src = '/embed-widget-single-quote.js'
+  script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js'
 
   // Set the widget configuration
   script.innerHTML = JSON.stringify({
@@ -42,20 +59,18 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style scoped>
 .tv-floating-widget {
   position: fixed;
   display: block;
   width: 300px;
   height: 150px;
-  left: 20px;     /* Bottom LEFT */
-  bottom: 30px;   /* Adjust as needed */
-  z-index: 9999;  /* Above app content */
+  z-index: 9999;
 
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
   
   /* Smooth transitions */
   transition: all 0.3s ease;
@@ -87,7 +102,7 @@ onMounted(() => {
   justify-content: center;
 }
 
-/* Dark theme variant (optional) */
+/* Dark theme variant */
 @media (prefers-color-scheme: dark) {
   .tv-floating-widget {
     background: rgba(20, 20, 30, 0.2);

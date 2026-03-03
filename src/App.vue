@@ -20,10 +20,10 @@
     </div>
 
     <!-- Date & Time Widgets -->
-    <DateTimeWidget />
+    <DateTimeWidget :position="settings.dateTimePosition" />
 
     <!-- TradingView Widget -->
-    <TradingViewWidget />
+    <TradingViewWidget :position="settings.tradingViewPosition" />
 
     <!-- Settings Button -->
     <button @click="isSettingsOpen = !isSettingsOpen" class="settings-btn" title="Settings">
@@ -114,6 +114,51 @@
             <input v-model.number="settings.blur" type="range" min="0" max="20" class="slider" />
           </div>
 
+          <!-- Widget Positions -->
+          <div class="setting-group">
+            <label>Date & Time Widget Position</label>
+            <div class="option-group">
+              <label class="radio-label">
+                <input v-model="settings.dateTimePosition" type="radio" value="top-left" />
+                Top Left
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.dateTimePosition" type="radio" value="top-right" />
+                Top Right
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.dateTimePosition" type="radio" value="bottom-left" />
+                Bottom Left
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.dateTimePosition" type="radio" value="bottom-right" />
+                Bottom Right
+              </label>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <label>TradingView Widget Position</label>
+            <div class="option-group">
+              <label class="radio-label">
+                <input v-model="settings.tradingViewPosition" type="radio" value="top-left" />
+                Top Left
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.tradingViewPosition" type="radio" value="top-right" />
+                Top Right
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.tradingViewPosition" type="radio" value="bottom-left" />
+                Bottom Left
+              </label>
+              <label class="radio-label">
+                <input v-model="settings.tradingViewPosition" type="radio" value="bottom-right" />
+                Bottom Right
+              </label>
+            </div>
+          </div>
+
           <!-- Save Button -->
           <button @click="saveSettings" class="btn-primary">Save Settings</button>
         </div>
@@ -142,7 +187,9 @@ const media = reactive({
 const settings = reactive({
   objectFit: 'cover',
   brightness: 100,
-  blur: 0
+  blur: 0,
+  dateTimePosition: 'top-left',
+  tradingViewPosition: 'bottom-left'
 })
 
 const backgroundStyle = computed(() => ({

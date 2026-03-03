@@ -1,5 +1,5 @@
 <template>
-  <div class="datetime-widgets">
+  <div class="datetime-widgets" :style="positionStyle">
     <!-- Date Widget -->
     <div class="glass-widget date-widget">
       <div class="widget-content">
@@ -19,11 +19,28 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+
+const props = defineProps({
+  position: {
+    type: String,
+    default: 'top-left'
+  }
+})
 
 const formattedDate = ref('')
 const formattedTime = ref('')
 let intervalId = null
+
+const positionStyle = computed(() => {
+  const positions = {
+    'top-left': { top: '20px', left: '20px', right: 'auto', bottom: 'auto' },
+    'top-right': { top: '20px', right: '20px', left: 'auto', bottom: 'auto' },
+    'bottom-left': { bottom: '20px', left: '20px', top: 'auto', right: 'auto' },
+    'bottom-right': { bottom: '20px', right: '20px', top: 'auto', left: 'auto' }
+  }
+  return positions[props.position] || positions['top-left']
+})
 
 const updateDateTime = () => {
   const now = new Date()
@@ -62,8 +79,6 @@ onUnmounted(() => {
 <style scoped>
 .datetime-widgets {
   position: fixed;
-  top: 20px;
-  left: 20px;
   z-index: 9998;
   display: flex;
   flex-direction: column;
