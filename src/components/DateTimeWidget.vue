@@ -33,13 +33,27 @@ const formattedTime = ref('')
 let intervalId = null
 
 const positionStyle = computed(() => {
-  const positions = {
-    'top-left': { top: '20px', left: '20px', right: 'auto', bottom: 'auto' },
-    'top-right': { top: '20px', right: '20px', left: 'auto', bottom: 'auto' },
-    'bottom-left': { bottom: '20px', left: '20px', top: 'auto', right: 'auto' },
-    'bottom-right': { bottom: '20px', right: '20px', top: 'auto', left: 'auto' }
+  if (!props.position) return { top: '20px', left: '20px' }
+  
+  const style = {}
+  
+  if (props.position.top !== undefined && props.position.top !== 'auto') {
+    style.top = typeof props.position.top === 'number' ? `${props.position.top}px` : props.position.top
   }
-  return positions[props.position] || positions['top-left']
+  
+  if (props.position.bottom !== undefined && props.position.bottom !== 'auto') {
+    style.bottom = typeof props.position.bottom === 'number' ? `${props.position.bottom}px` : props.position.bottom
+  }
+  
+  if (props.position.left !== undefined && props.position.left !== 'auto') {
+    style.left = typeof props.position.left === 'number' ? `${props.position.left}px` : props.position.left
+  }
+  
+  if (props.position.right !== undefined && props.position.right !== 'auto') {
+    style.right = typeof props.position.right === 'number' ? `${props.position.right}px` : props.position.right
+  }
+  
+  return style
 })
 
 const updateDateTime = () => {
